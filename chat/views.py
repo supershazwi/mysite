@@ -1,6 +1,7 @@
 # chat/views.py
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from . import consumers
+from channels.layers import get_channel_layer
 
 def index(request):
     return render(request, 'chat/index.html', {})

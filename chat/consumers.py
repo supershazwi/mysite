@@ -2,6 +2,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
+import openpyxl
 
 from .models import Chat
 
@@ -27,19 +28,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json['message']
 
-        # Send message to room group
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
+        # # Send message to room group
+        # await self.channel_layer.group_send(
+        #     self.room_group_name,
+        #     {
+        #         'type': 'chat_message',
+        #         'message': message
+        #     }
+        # )
 
-        await self.add_chat(message)
+        # await self.add_chat(message)
+
+        print(text_data)
+
+        # wb = openpyxl.load_workbook(text_data)
 
     # Receive message from room group
     async def chat_message(self, event):
@@ -56,3 +61,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             text = text,
             sender = "Shazwi"
             ).save()
+
+    def hello(self):
+        print("hello")
